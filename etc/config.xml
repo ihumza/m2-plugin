@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <sales_order_webhook_integration_options>
+            <webhook_settings>
+                <active>0</active>
+                <sales_order_webhook_subdomain></sales_order_webhook_subdomain>
+                <connection_key></connection_key>
+            </webhook_settings>
+        </sales_order_webhook_integration_options>
+    </default>
+</config>
