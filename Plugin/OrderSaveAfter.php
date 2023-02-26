@@ -1,22 +1,17 @@
 <?php
 
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+namespace M2\Webhook\Plugin;
 
-namespace M2\Webhook\Observer;
-
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use M2\Webhook\Helper\Data;
 use Magento\Framework\HTTP\Client\Curl;
 use Psr\Log\LoggerInterface;
 
-class SendOrder implements \Magento\Framework\Event\ObserverInterface
+class OrderSaveAfter
 {
     /**
-     * @var ScopeConfigInterface
+     * @var Data
      */
-    protected $_scopeConfig;
+    protected $_helper;
 
     /**
      * @var Curl
@@ -31,26 +26,24 @@ class SendOrder implements \Magento\Framework\Event\ObserverInterface
     /**
      * Constructor.
      *
-     * @param ScopeConfigInterface $scopeConfig
      * @param Curl $curl
      * @param LoggerInterface $logger
      */
 
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
+        Data $helper,
         Curl $curl,
         LoggerInterface $logger
     ) {
-        $this->_scopeConfig = $scopeConfig;
+        $this->_helper = $helper;
         $this->_curl = $curl;
         $this->_logger = $logger;
     }
-
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function afterSave(\Magento\Sales\Api\OrderRepositoryInterface $orderRepo, $order)
     {
-        $moduleStatus = $this->_scopeConfig->getValue('sales_order_webhook_integration_options/webhook_settings/active');
-        $webhookUrl = $this->_scopeConfig->getValue('sales_order_webhook_integration_options/webhook_settings/sales_order_webhook_subdomain');
-        $apiKey = $this->_scopeConfig->getValue('sales_order_webhook_integration_options/webhook_settings/connection_key');
+        $moduleStatus = $this->_helper->getModuleStatus();
+        $webhookUrl = $this->_helper->getWebhookUrl();
+        $apiKey = $this->_helper->getApiKey();
 
         if ((int)$moduleStatus !== 1) {
             return;     // Module is inactive
@@ -58,7 +51,6 @@ class SendOrder implements \Magento\Framework\Event\ObserverInterface
             return;     // Incorrect module configuration
         }
 
-        $order = $observer->getEvent()->getOrder();  // Get order 
         $orderData = [
             "store_id" => $order->getStoreId(),
             "increment_id" => $order->getIncrementId(),
@@ -80,5 +72,6 @@ class SendOrder implements \Magento\Framework\Event\ObserverInterface
         } catch (\Exception $e) {
             $this->_logger->debug(sprintf('Exception occurred with Webhook: %s', $e->getMessage()));
         }
+        return $order;
     }
 }
