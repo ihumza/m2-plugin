@@ -1,8 +1,8 @@
 <?php
 
-namespace M2\Webhook\Plugin;
+namespace GoedGepickt\Webhook\Plugin;
 
-use M2\Webhook\Helper\Data;
+use GoedGepickt\Webhook\Helper\Data;
 use Magento\Framework\HTTP\Client\Curl;
 use Psr\Log\LoggerInterface;
 

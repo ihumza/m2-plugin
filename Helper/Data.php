@@ -1,6 +1,6 @@
 <?php
 
-namespace M2\Webhook\Helper;
+namespace GoedGepickt\Webhook\Helper;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 

@@ -1,5 +1,5 @@
 {
-  "name": "humza/webhook",
+  "name": "GoedGepickt/Webhook",
   "description": "",
   "type": "magento2-module",
   "version": "1.0.0",
@@ -10,21 +10,21 @@
   "repositories": [
     {
       "type": "composer",
-      "url": "https://github.com/ihumza/m2-extension.git"
+      "url": "https://github.com/ihumza/m2-plugin.git"
     }
   ],
   "autoload": {
+    "files": [
+      "registration.php"
+    ],
     "psr-4": {
-      "M2\\Webhook\\": ""
-    },
-    "require": {
+      "GoedGepickt\\Webhook\\": ""
+    }
+  },
+  "require": {
       "php": ">=5.6.0",
       "composer/installers": "~1.0",
       "ext-curl": "*",
       "ext-json": "*"
-    },
-    "files": [
-      "registration.php"
-    ]
-  }
+    }
 }

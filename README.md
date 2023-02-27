@@ -1,19 +1,19 @@
-# Order Webhook for Magento 2
-Magento 2 Extensions for Order Webhook. 
+# GoedGepickt Webhook for Magento 2
+GoedGepickt Extension for Order Webhook. 
  
 ## Installation: 
 This project can easily be installed through Composer.
 
 ```
 composer require georock/webhook
-bin/magento module:enable M2_Webhook
+bin/magento module:enable GoedGepickt_Webhook
 bin/magento setup:upgrade
 ```
 ## OR 
 
 Download the zip file to your magento 2 directory as follows:
 
-./app/code/M2/Webhook
+./app/code/GoedGepickt/Webhook
 
 and run following commands in the terminal.
 
